@@ -21,6 +21,12 @@
       ],
       "@assets/*": [
         "./src/assets/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ],
+      "@interfaces/*": [
+        "./src/interfaces/*"
       ]
     }
   }

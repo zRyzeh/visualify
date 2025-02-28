@@ -1,8 +1,52 @@
 ---
 import Header from "@components/header/Header.astro";
 import MainLayout from "@layouts/MainLayout.astro";
+import type { Pexels } from "@interfaces/api/pexels";
+import { Icon } from "astro-icon/components";
+
+const page = 2;
+const per_page = 50;
+
+const apiResponse: Pexels = await fetch(
+	`http://localhost:4321/api/pexels?page=${page}&per_page=${per_page}`,
+)
+	.then((res) => res.json())
+	.catch((err) => console.error("Error:", err));
 ---
 
 <MainLayout>
 	<Header />
+
+	<section class="flex justify-center p-4">
+		<section class="columns-1 sm:columns-2 md:columns-3 gap-4 max-w-[1600px]">
+			{
+				apiResponse.photos.map((photo) => (
+					<article class="relative overflow-hidden rounded-xl mb-4 before:content-[''] before:absolute before:bottom-0 before:bg-black/20 before:w-full before:h-full before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-100 group">
+						<img alt={photo.alt} src={photo.src.large2x} class="" />
+						<button
+							class="absolute right-0 top-0 p-4 -translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200"
+							type="button"
+						>
+							<Icon name="heart-outline" color="white" class="h-8 w-8" />
+						</button>
+						<div class="absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
+							<a
+								href={photo.photographer_url}
+								target="_blank"
+								class="text-white font-semibold"
+							>
+								{photo.photographer}
+							</a>
+							<button
+								type="button"
+								class="bg-green-light text-white font-semibold px-4 py-2 rounded-md"
+							>
+								Descargar
+							</button>
+						</div>
+					</article>
+				))
+			}
+		</section>
+	</section>
 </MainLayout>
