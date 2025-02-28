@@ -1,0 +1,22 @@
+---
+import { Icon } from "astro-icon/components";
+import SearchBar from "./SearchBar.astro";
+---
+
+<header class="w-screen bg-green-dark">
+  <nav
+    class="w-full h-20 flex items-center justify-between border-b-1 border-white/50 px-4"
+  >
+    <h2 class="text-white font-bold text-3xl">Visualify</h2>
+    <Icon class="h-8 w-8" name="github" color="white" />
+  </nav>
+  <section class="h-60 flex justify-center items-center">
+    <section class="flex flex-col gap-8">
+      <h1 class="text-white text-3xl font-semibold">
+        Search free photos and videos.
+      </h1>
+
+      <SearchBar />
+    </section>
+  </section>
+</header>

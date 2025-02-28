@@ -1,0 +1,18 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<form role="search" autocomplete="off" class="flex bg-white rounded-xl">
+  <input
+    type="text"
+    placeholder="Search"
+    class="w-full placeholder:text-gray-400 placeholder:font-semibold focus:outline-none px-4"
+  />
+  <button
+    class="p-3
+     m-1 cursor-pointer rounded-xl hover:bg-gray-300"
+    type="submit"
+  >
+    <Icon class="h-6 w-6" name="search" />
+  </button>
+</form>
