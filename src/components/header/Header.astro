@@ -1,18 +1,31 @@
 ---
 import { Icon } from "astro-icon/components";
 import SearchBar from "./SearchBar.astro";
+import imgOcean from "@assets/ocean.jpg";
+import { Picture } from "astro:assets";
 ---
 
-<header class="w-full bg-green-dark">
+<header
+  class="relative w-full before:content-[''] before:absolute before:bottom-0 before:bg-black/20 before:w-full before:h-full before:-z-100"
+>
+  <Picture
+    src={imgOcean}
+    quality="low"
+    formats={["webp", "avif", "jpeg"]}
+    alt="Scene of the ocean floor with dark waters"
+    class="absolute w-full h-full object-cover -z-1000"
+  />
+
   <nav
-    class="w-full h-20 flex items-center justify-between border-b-1 border-white/50 px-4"
+    class="w-full h-20 flex items-center justify-between border-b-1 border-white/50 px-8"
   >
     <h2 class="text-white font-bold text-3xl">Visualify</h2>
     <Icon class="h-8 w-8" name="github" color="white" />
   </nav>
-  <section class="h-60 flex justify-center items-center">
+
+  <section class="h-[400px] flex justify-center items-center">
     <section class="flex flex-col gap-8">
-      <h1 class="text-white text-3xl font-semibold">
+      <h1 class="text-white text-4xl font-semibold">
         Search free photos and videos.
       </h1>
 

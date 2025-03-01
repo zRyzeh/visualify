@@ -6,5 +6,16 @@ import { Gallery } from "@components/gallery/Gallery";
 
 <MainLayout>
 	<Header />
-	<Gallery client:load />
+	<section class="flex gap-8 justify-center pt-8">
+		<a
+			href="/"
+			class="px-5 py-2 text-white text-lg bg-black/90 rounded-3xl font-semibold"
+		>
+			Photos
+		</a>
+		<a href="/videos" class="px-5 py-2 text-gray-600 text-lg font-semibold">
+			Videos
+		</a>
+	</section>
+	<Gallery mediaItem="Photos" client:load />
 </MainLayout>
