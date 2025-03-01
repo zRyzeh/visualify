@@ -28,6 +28,8 @@
       "@interfaces/*": [
         "./src/interfaces/*"
       ]
-    }
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }

@@ -4,4 +4,15 @@
   --color-green-dark: #022D33;
   --color-green-light: #045E66;
 
+  --animate-load: load 1.2s infinite;
+}
+
+@keyframes load {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
 }

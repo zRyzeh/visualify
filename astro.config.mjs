@@ -4,8 +4,10 @@ import icon from "astro-icon";
 
 import vercel from "@astrojs/vercel";
 
+import react from "@astrojs/react";
+
 export default defineConfig({
-  integrations: [icon()],
+  integrations: [icon(), react()],
 
   vite: {
     plugins: [tailwindcss()],
