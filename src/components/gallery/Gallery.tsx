@@ -1,14 +1,21 @@
 import { useEffect, useRef, useState } from "react";
-import type { Pexels } from "@interfaces/api/pexels";
-import { getPhotos } from "src/api/pexels";
+import type { PexelsPhoto, PexelsPhotos } from "@interfaces/api/photos";
+import { getPhotos, getVideos } from "src/api/pexels";
 import { Loading } from "@components/gallery/Loading";
 import { Photo } from "@components/gallery/Photo";
 import Masonry from "react-masonry-css";
+import type { PexelsVideo, PexelsVideos } from "@interfaces/api/videos";
+import { Video } from "@components/gallery/Video";
 
-type MediaItem = "Photos" | "Videos"
+type MediaItem = "Photos" | "Videos";
 
-export const Gallery = ({ mediaItem }: { mediaItem: MediaItem }) => {
-  const [photos, setPhotos] = useState<Pexels["photos"]>([]);
+interface GalleryInterface {
+  mediaItem: MediaItem;
+  searchQuery?: string;
+}
+
+export const Gallery = ({ mediaItem, searchQuery }: GalleryInterface) => {
+  const [media, setMedia] = useState<PexelsPhotos["photos"] | PexelsVideos["videos"]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -16,28 +23,40 @@ export const Gallery = ({ mediaItem }: { mediaItem: MediaItem }) => {
 
   const loadingRef = useRef(loading);
   const hasMoreRef = useRef(hasMore);
-  const photosRef = useRef(photos);
+  const mediaRef = useRef(media);
 
   loadingRef.current = loading;
   hasMoreRef.current = hasMore;
-  photosRef.current = photos;
+  mediaRef.current = media;
 
   const fetchPhotos = async () => {
     try {
       setLoading(true);
-      const response = await getPhotos({ page, per_page: 21 });
 
-      if (response.photos.length === 0) {
-        setHasMore(false);
-        return;
+      let response;
+      let fetchedMedia: PexelsPhoto[] | PexelsVideo[];
+      if (mediaItem === "Photos") {
+        response = await getPhotos({ page, per_page: 21 });
+        if (response.photos.length === 0) {
+          setHasMore(false);
+          return;
+        }
+        fetchedMedia = response.photos;
+      } else {
+        response = await getVideos({ page, per_page: 21 });
+        if (response.videos.length === 0) {
+          setHasMore(false);
+          return;
+        }
+        fetchedMedia = response.videos;
       }
 
-      const existingIds = new Set(photosRef.current.map(p => p.id));
-      const newPhotos = response.photos.filter(p => !existingIds.has(p.id));
+      const existingIds = new Set(mediaRef.current.map(m => m.id));
+      const newMedia = fetchedMedia.filter(item => !existingIds.has(item.id));
 
-      setPhotos((prev) => [...prev, ...newPhotos]);
+      setMedia((prev) => [...prev, ...newMedia]);
     } catch (error) {
-      console.error("Error fetching photos: ", error);
+      console.error("Error fetching media: ", error);
     } finally {
       setLoading(false);
     }
@@ -72,10 +91,9 @@ export const Gallery = ({ mediaItem }: { mediaItem: MediaItem }) => {
   return (
     <section className="flex flex-col items-center p-4">
       <div>
-        {
-          photos.length > 0 &&
+        {media.length > 0 && (
           <h2 className="text-2xl font-semibold py-8">Popular {mediaItem}</h2>
-        }
+        )}
 
         <Masonry
           breakpointCols={{
@@ -86,14 +104,15 @@ export const Gallery = ({ mediaItem }: { mediaItem: MediaItem }) => {
           className="flex -ml-4 w-auto max-w-[1500px]"
           columnClassName="pl-4"
         >
-          {photos.map((photo) => (
-            <div key={photo.id} className="mb-4">
-              <Photo photo={photo} />
+          {media.map((m) => (
+            <div key={m.id} className="mb-4">
+              {mediaItem === "Photos"
+                ? <Photo photo={m as PexelsPhoto} />
+                : <Video video={m as PexelsVideo} />}
             </div>
           ))}
         </Masonry>
       </div>
-
 
       <div
         ref={loaderRef}

@@ -1,12 +1,12 @@
-export interface Pexels {
+export interface PexelsPhotos {
   page: number;
   per_page: number;
-  photos: Photo[];
+  photos: PexelsPhoto[];
   total_results: number;
   next_page: string;
 }
 
-interface Photo {
+export interface PexelsPhoto {
   id: number;
   width: number;
   height: number;

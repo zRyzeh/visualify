@@ -1,13 +1,9 @@
-import type { PexelsPhoto } from "@interfaces/api/photos";
+import type { PexelsVideo } from "@interfaces/api/videos";
 import { HeartOutline } from "./icons/HeartIcons";
 
-interface PhotoInterface {
-  photo: PexelsPhoto
-}
-
-export const Photo = ({ photo }: PhotoInterface) => (
+export const Video = ({ video }: { video: PexelsVideo }) => (
   <article className="relative overflow-hidden rounded-xl before:content-[''] before:absolute before:bottom-0 before:bg-black/20 before:w-full before:h-full before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-100 group">
-    <img alt={photo.alt} src={photo.src.large2x} className="w-full min-h-[550px] object-cover" />
+    <img src={video.video_pictures[0].picture} className="w-full min-h-[550px] object-cover" />
     <button
       className="absolute right-0 top-0 p-4 -translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200"
       type="button"
@@ -16,11 +12,11 @@ export const Photo = ({ photo }: PhotoInterface) => (
     </button>
     <div className="absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
       <a
-        href={photo.photographer_url}
+        href={video.user.url}
         target="_blank"
         className="text-white font-semibold"
       >
-        {photo.photographer}
+        {video.user.name}
       </a>
       <button
         type="button"
