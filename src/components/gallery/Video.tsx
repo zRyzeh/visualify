@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import type { PexelsVideo } from "@interfaces/api/videos";
 import { HeartOutline } from "./icons/HeartIcons";
 import { Skeleton } from "./Skeleton";

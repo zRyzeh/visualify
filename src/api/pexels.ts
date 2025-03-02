@@ -21,7 +21,7 @@ export const getPhotos = async ({ page = DEFAULT_PAGE, per_page = DEFAULT_PER_PA
 }
 
 export const getPhotosByQuery = async ({ query, page = DEFAULT_PAGE, per_page = DEFAULT_PER_PAGE }: QuerySearch) => {
-  const apiURL = `http://localhost:4321/api/photos/popular?query=${query}&page=${page}&per_page=${per_page}`
+  const apiURL = `http://localhost:4321/api/photos/search?query=${query}&page=${page}&per_page=${per_page}`
 
   const photos: PexelsPhotos = await fetch(apiURL)
     .then((res) => res.json())

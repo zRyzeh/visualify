@@ -1,0 +1,25 @@
+---
+import { Gallery } from "@components/gallery/Gallery";
+import Header from "@components/header/Header.astro";
+import MainLayout from "@layouts/MainLayout.astro";
+
+const { search } = Astro.params;
+---
+
+<MainLayout>
+  <Header />
+
+  <section class="flex gap-8 justify-center p-8">
+    <a href="/" class="px-5 py-2 text-gray-600 text-lg font-semibold">
+      Photos
+    </a>
+    <a
+      href="/videos"
+      class="px-5 py-2 text-white text-lg bg-black/90 rounded-3xl font-semibold"
+    >
+      Videos
+    </a>
+  </section>
+
+  <Gallery mediaItem="Videos" searchQuery={search} client:load />
+</MainLayout>

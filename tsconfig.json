@@ -27,6 +27,9 @@
       ],
       "@interfaces/*": [
         "./src/interfaces/*"
+      ],
+      "@api/*": [
+        "./src/api/*"
       ]
     },
     "jsx": "react-jsx",

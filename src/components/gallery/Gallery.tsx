@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import type { PexelsPhoto, PexelsPhotos } from "@interfaces/api/photos";
-import { getPhotos, getVideos } from "src/api/pexels";
-import { Loader } from "@components/gallery/Loader";
+import { getPhotos, getPhotosByQuery, getVideos, getVideosByQuery } from "@api/pexels";
+import { Loader } from "@components/common/Loader";
 import { Photo } from "@components/gallery/Photo";
 import Masonry from "react-masonry-css";
 import type { PexelsVideo, PexelsVideos } from "@interfaces/api/videos";
 import { Video } from "@components/gallery/Video";
+import { BtnGoUp } from "@components/common/BtnGoUp"
 
 type MediaItem = "Photos" | "Videos";
 
@@ -36,14 +37,20 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
       let response;
       let fetchedMedia: PexelsPhoto[] | PexelsVideo[];
       if (mediaItem === "Photos") {
-        response = await getPhotos({ page, per_page: 21 });
+        response = searchQuery
+          ? await getPhotosByQuery({ query: searchQuery, page, per_page: 21 })
+          : await getPhotos({ page, per_page: 21 });
+
         if (response.photos.length === 0) {
           setHasMore(false);
           return;
         }
         fetchedMedia = response.photos;
       } else {
-        response = await getVideos({ page, per_page: 21 });
+        response = searchQuery
+          ? await getVideosByQuery({ query: searchQuery, page, per_page: 21 })
+          : await getVideos({ page, per_page: 21 });
+
         if (response.videos.length === 0) {
           setHasMore(false);
           return;
@@ -98,7 +105,11 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
     <section className="flex flex-col items-center">
       <div>
         {media.length > 0 && (
-          <h2 className="text-2xl font-semibold pb-8 px-6">Popular {mediaItem}</h2>
+          <h2 className="text-2xl font-semibold pb-8 px-6">{
+            searchQuery
+              ? `${mediaItem} of ${searchQuery}`
+              : `Popular ${mediaItem}`
+          }</h2>
         )}
 
         <Masonry
@@ -125,7 +136,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
         className="flex justify-center items-center h-20 min-h-[5rem]"
       >
         {loading && <Loader />}
-        {!hasMore && <p className="text-2xl ">¡Has llegado al final!</p>}
+        {!hasMore && <BtnGoUp />}
       </div>
     </section>
   );
