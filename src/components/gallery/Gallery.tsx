@@ -98,7 +98,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
     <section className="flex flex-col items-center">
       <div>
         {media.length > 0 && (
-          <h2 className="text-2xl font-semibold pb-8">Popular {mediaItem}</h2>
+          <h2 className="text-2xl font-semibold pb-8 px-6">Popular {mediaItem}</h2>
         )}
 
         <Masonry
@@ -107,7 +107,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
             1024: 2,
             640: 1
           }}
-          className="flex -ml-4 w-screen max-w-[1550px]"
+          className="flex -ml-4 w-screen max-w-[1550px] px-6"
           columnClassName="pl-4"
         >
           {media.map((m) => (
