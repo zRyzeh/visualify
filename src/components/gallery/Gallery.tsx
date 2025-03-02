@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { PexelsPhoto, PexelsPhotos } from "@interfaces/api/photos";
 import { getPhotos, getVideos } from "src/api/pexels";
-import { Loading } from "@components/gallery/Loading";
+import { Loader } from "@components/gallery/Loader";
 import { Photo } from "@components/gallery/Photo";
 import Masonry from "react-masonry-css";
 import type { PexelsVideo, PexelsVideos } from "@interfaces/api/videos";
@@ -9,12 +9,12 @@ import { Video } from "@components/gallery/Video";
 
 type MediaItem = "Photos" | "Videos";
 
-interface GalleryInterface {
+interface GalleryProps {
   mediaItem: MediaItem;
   searchQuery?: string;
 }
 
-export const Gallery = ({ mediaItem, searchQuery }: GalleryInterface) => {
+export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
   const [media, setMedia] = useState<PexelsPhotos["photos"] | PexelsVideos["videos"]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryInterface) => {
   hasMoreRef.current = hasMore;
   mediaRef.current = media;
 
-  const fetchPhotos = async () => {
+  const fetchMedia = async () => {
     try {
       setLoading(true);
 
@@ -54,7 +54,13 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryInterface) => {
       const existingIds = new Set(mediaRef.current.map(m => m.id));
       const newMedia = fetchedMedia.filter(item => !existingIds.has(item.id));
 
-      setMedia((prev) => [...prev, ...newMedia]);
+      setMedia((prev) => {
+        if (mediaItem === "Photos") {
+          return [...(prev as PexelsPhoto[]), ...(newMedia as PexelsPhoto[])];
+        } else {
+          return [...(prev as PexelsVideo[]), ...(newMedia as PexelsVideo[])];
+        }
+      });
     } catch (error) {
       console.error("Error fetching media: ", error);
     } finally {
@@ -85,14 +91,14 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryInterface) => {
   }, []);
 
   useEffect(() => {
-    fetchPhotos();
+    fetchMedia();
   }, [page]);
 
   return (
-    <section className="flex flex-col items-center p-4">
+    <section className="flex flex-col items-center">
       <div>
         {media.length > 0 && (
-          <h2 className="text-2xl font-semibold py-8">Popular {mediaItem}</h2>
+          <h2 className="text-2xl font-semibold pb-8">Popular {mediaItem}</h2>
         )}
 
         <Masonry
@@ -101,7 +107,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryInterface) => {
             1024: 2,
             640: 1
           }}
-          className="flex -ml-4 w-auto max-w-[1500px]"
+          className="flex -ml-4 w-screen max-w-[1550px]"
           columnClassName="pl-4"
         >
           {media.map((m) => (
@@ -118,7 +124,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryInterface) => {
         ref={loaderRef}
         className="flex justify-center items-center h-20 min-h-[5rem]"
       >
-        {loading && <Loading />}
+        {loading && <Loader />}
         {!hasMore && <p className="text-2xl ">¡Has llegado al final!</p>}
       </div>
     </section>
