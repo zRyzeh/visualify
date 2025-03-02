@@ -2,6 +2,7 @@ import type { PexelsPhoto } from "@interfaces/api/photos";
 import { HeartOutline } from "./icons/HeartIcons";
 import { useState } from "react";
 import { Skeleton } from "./Skeleton";
+import { BtnDownload } from "@components/common/BtnDownload";
 
 interface PhotoProps {
   photo: PexelsPhoto
@@ -40,12 +41,7 @@ export const Photo = ({ photo }: PhotoProps) => {
         >
           {photo.photographer}
         </a>
-        <button
-          type="button"
-          className="bg-green-light text-white font-semibold px-4 py-2 rounded-md"
-        >
-          Download
-        </button>
+        <BtnDownload url={new URL(photo.src.original)} />
       </div>
     </article>
   );

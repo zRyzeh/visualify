@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import type { PexelsVideo } from "@interfaces/api/videos";
 import { HeartOutline } from "./icons/HeartIcons";
 import { Skeleton } from "./Skeleton";
+import { BtnDownload } from "@components/common/BtnDownload";
 
 interface VideoProps {
   video: PexelsVideo;
@@ -79,12 +80,7 @@ export const Video = ({ video }: VideoProps) => {
             >
               {video.user.name}
             </a>
-            <button
-              type="button"
-              className="bg-green-light text-white font-semibold px-4 py-2 rounded-md"
-            >
-              Download
-            </button>
+            <BtnDownload url={new URL(videoSource)} />
           </div>
         </>
       )}
