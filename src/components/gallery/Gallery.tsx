@@ -136,7 +136,11 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
         className="flex justify-center items-center h-20 min-h-[5rem]"
       >
         {loading && <Loader />}
-        {!hasMore && <BtnGoUp />}
+        {
+          !hasMore && (page === 1
+            ? <div className="text-xl">No items found.</div>
+            : <BtnGoUp />)
+        }
       </div>
     </section>
   );
