@@ -13,7 +13,7 @@ export const Photo = ({ photo }: PhotoProps) => {
   const aspectRatio = photo.width / photo.height
 
   return (
-    <article className="relative overflow-hidden rounded-xl before:content-[''] before:absolute before:bottom-0 before:bg-black/20 before:w-full before:h-full before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-100 group">
+    <article className="relative overflow-hidden rounded-xl shadow-lg before:content-[''] before:absolute before:top-0 before:left-0 before:bg-gradient-to-b before:from-black/25 before:to-transparent before:w-full before:h-24 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-gradient-to-t after:from-black/30 after:to-transparent after:w-full after:h-40 after:opacity-0 hover:after:opacity-100 after:transition-opacity after:duration-300 group">
       {!imageLoaded && (
         <Skeleton aspectRatio={aspectRatio} />
       )}
@@ -26,13 +26,13 @@ export const Photo = ({ photo }: PhotoProps) => {
       />
 
       <button
-        className="absolute right-0 top-0 p-4 -translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200"
+        className="z-1000 absolute right-0 top-0 p-4 -translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200"
         type="button"
       >
         <HeartOutline className="h-8 w-8" />
       </button>
 
-      <div className="absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
+      <div className="z-1000 absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
         <a
           href={photo.photographer_url}
           target="_blank"
