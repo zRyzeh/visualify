@@ -25,11 +25,17 @@
       "@pages/*": [
         "./src/pages/*"
       ],
-      "@interfaces/*": [
-        "./src/interfaces/*"
-      ],
       "@api/*": [
         "./src/api/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@definitions/*": [
+        "./src/definitions/*"
+      ],
+      "@interfaces/*": [
+        "./src/definitions/interfaces/*"
       ]
     },
     "jsx": "react-jsx",

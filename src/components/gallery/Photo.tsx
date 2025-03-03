@@ -1,8 +1,8 @@
 import type { PexelsPhoto } from "@interfaces/api/photos";
-import { HeartOutline } from "./icons/HeartIcons";
 import { useState } from "react";
 import { Skeleton } from "./Skeleton";
 import { BtnDownload } from "@components/common/BtnDownload";
+import { BtnLike } from "@components/common/BtnLike";
 
 interface PhotoProps {
   photo: PexelsPhoto
@@ -26,12 +26,7 @@ export const Photo = ({ photo }: PhotoProps) => {
         onLoad={() => setImageLoaded(true)}
       />
 
-      <button
-        className="z-1000 absolute right-0 top-0 p-4 -translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200"
-        type="button"
-      >
-        <HeartOutline className="h-8 w-8" />
-      </button>
+      <BtnLike id={photo.id} mediaItem={"Photos"} />
 
       <div className="z-1000 absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
         <a

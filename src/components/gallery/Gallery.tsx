@@ -7,8 +7,7 @@ import Masonry from "react-masonry-css";
 import type { PexelsVideo, PexelsVideos } from "@interfaces/api/videos";
 import { Video } from "@components/gallery/Video";
 import { BtnGoUp } from "@components/common/BtnGoUp"
-
-type MediaItem = "Photos" | "Videos";
+import type { MediaItem } from "@definitions/media";
 
 interface GalleryProps {
   mediaItem: MediaItem;

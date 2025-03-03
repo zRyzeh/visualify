@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
-import type { PexelsVideo } from "@interfaces/api/videos";
-import { HeartOutline } from "./icons/HeartIcons";
+import type { PexelsVideo } from "@interfaces/api/videos"
 import { Skeleton } from "./Skeleton";
 import { BtnDownload } from "@components/common/BtnDownload";
+import { BtnLike } from "@components/common/BtnLike";
 
 interface VideoProps {
   video: PexelsVideo;
@@ -65,12 +65,7 @@ export const Video = ({ video }: VideoProps) => {
 
       {imageLoaded && (
         <>
-          <button
-            className="z-1000 absolute right-0 top-0 p-4 -translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200"
-            type="button"
-          >
-            <HeartOutline className="h-8 w-8" />
-          </button>
+          <BtnLike id={video.id} mediaItem={"Videos"} />
 
           <div className="z-1000 absolute bottom-0 flex items-center justify-between gap-2 w-full p-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition duration-200">
             <a
