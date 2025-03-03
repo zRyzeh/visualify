@@ -20,14 +20,24 @@ export const GET: APIRoute = async ({ request }) => {
 
   const apiUrl = `https://api.pexels.com/v1/search?query=${query}&page=${page}&per_page=${per_page}`;
 
-  const response = await fetch(apiUrl, {
-    headers: {
-      Authorization: API_KEY,
-    },
-  });
+  try {
+    const response = await fetch(apiUrl, {
+      headers: {
+        Authorization: API_KEY,
+      },
+    });
 
-  const data = await response.json();
-  return new Response(JSON.stringify(data), {
-    headers: { "Content-Type": "application/json" },
-  });
+    const data = await response.json();
+    return new Response(JSON.stringify(data), {
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    console.error((error as Error).stack)
+
+    const res = { error: "Server Internal Error" }
+    return new Response(JSON.stringify(res), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }

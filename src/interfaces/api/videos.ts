@@ -5,6 +5,7 @@ export interface PexelsVideos {
   total_results: number;
   next_page: string;
   url: string;
+  error: string;
 }
 
 export interface PexelsVideo {

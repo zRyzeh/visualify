@@ -4,6 +4,7 @@ export interface PexelsPhotos {
   photos: PexelsPhoto[];
   total_results: number;
   next_page: string;
+  error: string;
 }
 
 export interface PexelsPhoto {

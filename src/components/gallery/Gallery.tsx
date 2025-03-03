@@ -20,6 +20,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState(false);
   const loaderRef = useRef<HTMLDivElement>(null);
 
   const loadingRef = useRef(loading);
@@ -41,20 +42,32 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
           ? await getPhotosByQuery({ query: searchQuery, page, per_page: 21 })
           : await getPhotos({ page, per_page: 21 });
 
+        if (response.error) {
+          setError(true);
+          return;
+        }
+
         if (response.photos.length === 0) {
           setHasMore(false);
           return;
         }
+
         fetchedMedia = response.photos;
       } else {
         response = searchQuery
           ? await getVideosByQuery({ query: searchQuery, page, per_page: 21 })
           : await getVideos({ page, per_page: 21 });
 
+        if (response.error) {
+          setError(true);
+          return;
+        }
+
         if (response.videos.length === 0) {
           setHasMore(false);
           return;
         }
+
         fetchedMedia = response.videos;
       }
 
@@ -141,6 +154,7 @@ export const Gallery = ({ mediaItem, searchQuery }: GalleryProps) => {
             ? <div className="text-xl">No items found.</div>
             : <BtnGoUp />)
         }
+        {error && <div className="text-xl">An error occurred on the server.</div>}
       </div>
     </section>
   );

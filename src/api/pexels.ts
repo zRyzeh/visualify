@@ -1,21 +1,25 @@
 import type { PexelsPhotos } from "@interfaces/api/photos";
-import type { PexelsVideo, PexelsVideos } from "@interfaces/api/videos";
+import type { PexelsVideos } from "@interfaces/api/videos";
+
+interface Search {
+  page?: number,
+  per_page?: number
+}
 
 interface QuerySearch {
   query: string,
-  page: number,
-  per_page: number
+  page?: number,
+  per_page?: number
 }
 
 const DEFAULT_PAGE = 1
 const DEFAULT_PER_PAGE = 20
 
-export const getPhotos = async ({ page = DEFAULT_PAGE, per_page = DEFAULT_PER_PAGE } = {}) => {
+export const getPhotos = async ({ page = DEFAULT_PAGE, per_page = DEFAULT_PER_PAGE }: Search) => {
   const apiURL = `http://localhost:4321/api/photos/popular?page=${page}&per_page=${per_page}`
 
   const photos: PexelsPhotos = await fetch(apiURL)
     .then((res) => res.json())
-    .catch((err) => console.error("Error:", err));
 
   return photos;
 }
@@ -25,17 +29,15 @@ export const getPhotosByQuery = async ({ query, page = DEFAULT_PAGE, per_page = 
 
   const photos: PexelsPhotos = await fetch(apiURL)
     .then((res) => res.json())
-    .catch((err) => console.error("Error:", err));
 
   return photos;
 }
 
-export const getVideos = async ({ page = DEFAULT_PAGE, per_page = DEFAULT_PER_PAGE } = {}) => {
+export const getVideos = async ({ page = DEFAULT_PAGE, per_page = DEFAULT_PER_PAGE }: Search) => {
   const apiURL = `http://localhost:4321/api/videos/popular?page=${page}&per_page=${per_page}`
 
   const videos: PexelsVideos = await fetch(apiURL)
     .then((res) => res.json())
-    .catch((err) => console.error("Error:", err));
 
   return videos;
 }
@@ -45,7 +47,6 @@ export const getVideosByQuery = async ({ query, page = DEFAULT_PAGE, per_page = 
 
   const videos: PexelsVideos = await fetch(apiURL)
     .then((res) => res.json())
-    .catch((err) => console.error("Error:", err));
 
   return videos;
 }
