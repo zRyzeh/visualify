@@ -1,7 +1,6 @@
 import { HeartOutline, Heart } from "@components/gallery/icons/HeartIcons";
 import type { MediaItem } from "@definitions/media";
-import { useEffect } from "react";
-import { useLikeMedia } from "src/hooks/useLikeMedia";
+import { useLikeMedia } from "@hooks/useLikeMedia";
 
 interface BtnLikeProps {
   id: number;

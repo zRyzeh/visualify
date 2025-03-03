@@ -28,8 +28,17 @@
       "@api/*": [
         "./src/api/*"
       ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
       "@hooks/*": [
         "./src/hooks/*"
+      ],
+      "@store/*": [
+        "./src/store/*"
+      ],
+      "@context/*": [
+        "./src/context/*"
       ],
       "@definitions/*": [
         "./src/definitions/*"
